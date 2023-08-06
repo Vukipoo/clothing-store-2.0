@@ -1,10 +1,11 @@
 import React from "react";
-import { render } from "react-dom";
 import { BrowserRouter } from "react-router-dom";
 import ReactDOM from 'react-dom/client'
 
 import App from "./App";
 import { UserProvider } from "./contexts/user.context";
+import { ProductsProvider } from './contexts/products.context';
+
 
 import "./index.scss";
 
@@ -13,10 +14,12 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <UserProvider>
+      <ProductsProvider>
         <App />
+      </ProductsProvider>
       </UserProvider>
     </BrowserRouter>
-  </React.StrictMode>,
+  </React.StrictMode>
   
 );
 
