@@ -9,19 +9,27 @@ import {
   signOut,
   onAuthStateChanged,
 } from 'firebase/auth';
-import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  getDocs,
+  setDoc,
+  collection,
+  writeBatch,
+  query,
+} from 'firebase/firestore';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyAwctKC-F8t5E3bBQ34Lnw2bqZyNZ7CgPE",
-    authDomain: "crazycat-clothing-db.firebaseapp.com",
-    projectId: "crazycat-clothing-db",
-    storageBucket: "crazycat-clothing-db.appspot.com",
-    messagingSenderId: "210766464891",
-    appId: "1:210766464891:web:e2368512f7447c6b0c5fde"
-  };
-  
-  // Initialize Firebase
-  const firebaseApp = initializeApp(firebaseConfig);
+  apiKey: "AIzaSyAwctKC-F8t5E3bBQ34Lnw2bqZyNZ7CgPE",
+  authDomain: "crazycat-clothing-db.firebaseapp.com",
+  projectId: "crazycat-clothing-db",
+  storageBucket: "crazycat-clothing-db.appspot.com",
+  messagingSenderId: "210766464891",
+  appId: "1:210766464891:web:e2368512f7447c6b0c5fde"
+};
+
+const firebaseApp = initializeApp(firebaseConfig);
 
 const googleProvider = new GoogleAuthProvider();
 
@@ -36,6 +44,35 @@ export const signInWithGoogleRedirect = () =>
   signInWithRedirect(auth, googleProvider);
 
 export const db = getFirestore();
+export const addCollectionAndDocuments = async (
+  collectionKey,
+  objectsToAdd
+) => {
+  const batch = writeBatch(db);
+  const collectionRef = collection(db, collectionKey);
+  
+  objectsToAdd.forEach((object) => {
+     const docRef = doc(collectionRef, object.title.toLowerCase());
+     batch.set(docRef, object);
+  });
+
+  await batch.commit();
+  console.log('done');
+};
+
+export const getCategoriesAndDocuments = async () => {
+  const collectionRef = collection(db, 'categories');
+  const q = query(collectionRef);
+
+  const querySnapshot = await getDocs(q);
+  const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
+    const { title, items } = docSnapshot.data();
+    acc[title.toLowerCase()] = items;
+    return acc;
+  }, {});
+
+  return categoryMap;
+};
 
 export const createUserDocumentFromAuth = async (
   userAuth,
@@ -80,4 +117,5 @@ export const signInAuthUserWithEmailAndPassword = async (email, password) => {
 
 export const signOutUser = async () => await signOut(auth);
 
-export const onAuthStateChangedListener = (callback) => onAuthStateChanged(auth, callback)
+export const onAuthStateChangedListener = (callback) =>
+  onAuthStateChanged(auth, callback);
