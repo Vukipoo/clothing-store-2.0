@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/clothing-store-2.0/static/css/main.9c34684f.css",
-    "main.js": "/clothing-store-2.0/static/js/main.1b3f3433.js",
+    "main.js": "/clothing-store-2.0/static/js/main.d0a90836.js",
     "static/media/CrazyCatLogo.svg": "/clothing-store-2.0/static/media/CrazyCatLogo.1dcbdd330e8168022197e910cd101547.svg",
     "static/media/shopping-bag.svg": "/clothing-store-2.0/static/media/shopping-bag.a688874f6f1507316bdfa420328a4a53.svg",
     "index.html": "/clothing-store-2.0/index.html",
     "main.9c34684f.css.map": "/clothing-store-2.0/static/css/main.9c34684f.css.map",
-    "main.1b3f3433.js.map": "/clothing-store-2.0/static/js/main.1b3f3433.js.map"
+    "main.d0a90836.js.map": "/clothing-store-2.0/static/js/main.d0a90836.js.map"
   },
   "entrypoints": [
     "static/css/main.9c34684f.css",
-    "static/js/main.1b3f3433.js"
+    "static/js/main.d0a90836.js"
   ]
 }
